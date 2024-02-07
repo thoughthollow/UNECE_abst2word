@@ -1,0 +1,12 @@
+NOTES
+-----
+
+2024/08/02 - I had trouble with pushing the repo to Github initially after doing the commits in RStudio.
+To resolve the issue, I created an empty repo with the same name as the project ("UNECE_abst2word"), then performed the below in the Terminal in RStudio:
+
+  "
+  …or push an existing repository from the command line
+  git remote add origin https://github.com/thoughthollow/UNECE_abst2word.git
+  git branch -M main
+  git push -u origin main
+  "
