@@ -16,3 +16,5 @@ It is intended for use by UNECE staff only.
 1. Open the R script "abst2word_unecestyle_V1.R".
 2. Change any placeholder values as needed (see the values listed under "Meeting Organisational Data").
 3. Run the script.
+
+Note that this repo is currently under development.
