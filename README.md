@@ -13,8 +13,9 @@ It is intended for use by UNECE staff only.
 - RStudio
 
 # How To Guide
-1. Open the R script "abst2word_unecestyle_V1.R".
-2. Change any placeholder values as needed (see the values listed under "Meeting Organisational Data").
-3. Run the script.
+1. Download "Abstract submission for Expert Meeting on Dissemination & Communication of Statistics 2023(1-41).xlsx" from the UNECE SharePoint location and add the file to the "data" folder.
+2. Open the R script "abst2word_unecestyle_V1.R".
+3. Change any placeholder values as needed (see the values listed under "Meeting Organisational Data").
+4. Run the script.
 
 Note that this repo is currently under development.
