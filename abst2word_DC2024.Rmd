@@ -1,0 +1,70 @@
+---
+#title: "word_abstract"
+#author: "UNECE_ModernStats"
+#date: "2024-01-28"
+output: 
+  officedown::rdocx_document:
+    reference_docx: "abst_template.docx"
+
+params:
+  abstract_title: "AbstractTitle_PH"
+  first_name: "Firstname_PH"
+  last_name: "Lastname_PH"
+  organisation: "Organisation_PH"
+  country: "Country_PH"
+  email_address: "email_PH"
+  expertmeeting: "expmeetPH"
+  venue: "venuePH"
+  abstract: "Abstract_PH"
+  eventdate: "DD MMMM YYYY"
+  noticedate: "DD MMMM YYYY"
+  coauthors: "coauthorsPH"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(officedown)
+library(officer)
+library(flextable)
+library(magrittr)
+ft <- fp_text(font.size = 40)
+```
+
+UNITED NATIONS ECONOMIC COMMISSION FOR EUROPE\
+CONFERENCE OF EUROPEAN STATISTICIANS
+
+[Expert Meeting on `r params$expertmeet`]{custom-style="strong"} \
+`r params$eventdate`, `r params$venue`
+
+`r notedateright = fpar(params$noticedate, fp_p = fp_par(text.align = "right"))
+    
+notedateright`
+
+`r blueline = fp_par(
+    padding.top = 5,
+    border.top = fp_border(
+      width = 2,
+      color = "#548DD4",
+    )
+    )
+    
+blueline`
+
+```{r ifcoauthors, include = FALSE}
+if (!is.na(params$coauthors))  {
+  coauths <- paste("; ",params$coauthors)
+} else {
+  coauths <- ""
+}
+```
+
+# `r params$abstract_title`
+`r coauths` (`r params$organisation`, `r params$country`)
+
+[`r params$email_address`](`r params$email_address`)
+
+`r run_linebreak()`
+
+**_Abstract_**
+
+`r params$abstract`

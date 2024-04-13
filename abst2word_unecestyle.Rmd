@@ -59,7 +59,7 @@ if (!is.na(params$coauthors))  {
 ```
 
 # `r params$abstract_title`
-`r params$first_name` `r params$last_name` `r params$last_name``r coauths` (`r params$organisation`, `r params$country`)
+`r params$first_name` `r params$last_name` `r coauths` (`r params$organisation`, `r params$country`)
 
 [`r params$email_address`](`r params$email_address`)
 

@@ -14,34 +14,49 @@
   if(length(new.packages)) install.packages(new.packages)
   rm(list.of.packages,new.packages)
 }
-# Load packages
-library(tidyverse)
-library(readxl)
-library(janitor)
-library(officedown)
 
+# Load packages
+{
+  library(tidyverse)
+  library(readxl)
+  library(janitor)
+  library(officedown)
+}
 
 ### Setup end ###
 
-# Begin by reading in the Excel data into a dataframe (df).
-# L-> If using another Excel file, then modify the file name string below. 
-df <- read_excel("data/Abstract submission for Expert Meeting on Dissemination & Communication of Statistics 2023(1-41).xlsx",
-                 sheet = "Abstract list") %>%
-  clean_names() %>%
-  rename(
-    "country" = "country_represented_if_national_organisation_skip_if_international_organisation_or_academia",
-    "session" = "for_which_session_you_are_submitting_the_contribution_for_the_description_of_the_sessions_see_information_notice_1",
-    "abstract" = "abstract_of_the_contribution_approximately_200_400_words",
-    "abstract_title" = "title_of_the_contribution",
-    "coauthors" = "names_of_co_authors_if_any"
-  )
+# Begin by reading in the Excel data into a dataframe (df)
+df <- read_excel(file.choose(),
+                 sheet = 1) %>% # This assumes that the first sheet is the right one
+# Clean the column names
+clean_names() %>%
+# Rename the columns in the df so that they match those in the "render_function" below.
+rename(
+  "country" = "country_you_represent",
+  "abstract" = "abstract_text_100_200_words",
+  "abstract_title" = "title_of_your_contribution_abstract",
+  "coauthors" = "authors",
+  "organisation" = "name_of_the_organization_you_represent"
+)
+
+# Clean up the first names
+df$first_name = str_to_title(df$first_name)
+
+# Clean up the surnames
+df$last_name <- map_if(df$last_name,
+       !grepl("[a-z]", df$last_name),
+       str_to_title
+)
+       
 
 # Meeting Organisational Data
 # L-> Change these values to change them in the outputted MS Word docs.
-expertmeeting <- "meetingPlaceholder"
-venue <- "venuePlaceholder"
-noticedate <- "DD MMMM 20XX"
-eventdate <- "DD MMMM 20XX"
+{
+  expertmeeting <- "Statistical Data Collection and Sources"
+  venue <- "Geneva, Switzerland"
+  noticedate <- format(Sys.Date(), format="%d %B %Y")
+  eventdate <- "22-24 May 2024"
+}
 
 #This function is for handling the knitting (i.e. creation from a RMarkdown file template) of the PDFs.
 render_function <- function(abstract_title, # These function arguments match with the parametres in the RMarkdown file
@@ -57,7 +72,7 @@ render_function <- function(abstract_title, # These function arguments match wit
                             eventdate,
                             coauthors)
 {
-  rmarkdown::render("abst2word_V2.Rmd", # This is the RMarkdown file
+  rmarkdown::render("abst2word_DC2024.Rmd", # This is the RMarkdown file
                     params = list(abstract_title = abstract_title,
                                   first_name = first_name,
                                   last_name = last_name,
@@ -71,8 +86,9 @@ render_function <- function(abstract_title, # These function arguments match wit
                                   eventdate = eventdate,
                                   coauthors = coauthors
                     ),
-                    output_dir = "docs", # This is where the MS Word documents are output
-                    output_file=paste0("Abstract", " - ", first_name, " ", last_name, " - ", format(Sys.Date(), format="%Y_%m_%d"))
+                    output_dir = "docs/DC2024", # This is where the MS Word documents are output
+                    # For now, I've added a sequential no to the output title to handle multiple submissions by the same authors
+                    output_file=paste0("Abstract", " - ", first_name, " ", last_name, " - ", format(Sys.Date(), format="%Y_%m_%d"),"_No",i)
   )  # Modify the code in output_file to change the file name formats for the MS Word docs
 }
 

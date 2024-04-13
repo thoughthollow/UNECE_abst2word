@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+data/Abstract submission for Expert Meeting on Dissemination & Communication of Statistics 2023(1-41).xlsx
+data/DCabstracts_AJTworkingfile.xlsx
+data/
+docs/
+# The above tells Git to ignore certain files as well as all files in the specified folders
