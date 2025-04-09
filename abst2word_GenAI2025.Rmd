@@ -33,7 +33,7 @@ ft <- fp_text(font.size = 40)
 UNITED NATIONS ECONOMIC COMMISSION FOR EUROPE\
 CONFERENCE OF EUROPEAN STATISTICIANS
 
-[Expert Meeting on `r params$expertmeet`]{custom-style="strong"} \
+[`r params$expertmeet`]{custom-style="strong"} \
 `r params$eventdate`, `r params$venue`
 
 `r notedateright = fpar(params$noticedate, fp_p = fp_par(text.align = "right"))
@@ -52,7 +52,7 @@ blueline`
 
 ```{r ifcoauthors, include = FALSE}
 if (!is.na(params$authors))  {
-  auths <- paste(", ",params$authors)
+  auths <- paste("",params$authors)
 } else {
   auths <- ""
 }

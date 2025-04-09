@@ -31,7 +31,7 @@
 df <- read_excel(file.choose(),
                  sheet = 1) %>% # This assumes that the first sheet is the right one
 # Clean the column names
-clean_names() %>%
+clean_names(ascii = TRUE) %>%
 # Rename the columns in the df so that they match those in the "render_function" below.
 rename(
   "country" = "country",
@@ -47,7 +47,7 @@ df$first_name = str_to_title(df$first_name)
 
 # Clean up the surnames
 df$last_name <- map_if(df$last_name,
-       !grepl("[a-z]", df$last_name),
+       !grepl("[a-z]", df$last_name, useBytes = TRUE),
        str_to_title
 )
        
