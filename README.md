@@ -8,8 +8,6 @@ It is intended for use by UNECE staff only.
 ## Prerequisites
 - R
 - MS Word
-
-## Recommended
 - RStudio
 
 # How To Guide
