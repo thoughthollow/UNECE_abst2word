@@ -4,7 +4,7 @@ author: "`r paste(params$first_name,params$last_name)`"
 output: 
   officedown::rdocx_document:
     pandoc_args: --shift-heading-level-by=0
-    reference_docx: "abst_template.docx"
+    reference_docx: "abst_template_SDE2024.docx"
 
 params:
   abstract_title: "AbstractTitle_PH"
@@ -53,14 +53,14 @@ blueline`
 
 ```{r ifcoauthors, include = FALSE}
 if (!is.na(params$coauthors))  {
-  coauths <- paste(params$coauthors, "; ")
+  coauths <- paste(", ",params$coauthors)
 } else {
   coauths <- ""
 }
 ```
 
 # `r params$abstract_title`
-`r coauths` (`r params$organisation`, `r params$country`)
+`r params$first_name` `r params$last_name``r coauths` (`r params$organisation`, `r params$country`)
 
 [`r params$email_address`](`r params$email_address`)
 

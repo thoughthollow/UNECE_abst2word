@@ -18,8 +18,7 @@ params:
   abstract: "Abstract_PH"
   eventdate: "DD MMMM YYYY"
   noticedate: "DD MMMM YYYY"
-  coauthors: "coauthorsPH"
-  session_no: "session_noPH"
+  authors: "authorsPH"
 ---
 
 ```{r setup, include=FALSE}
@@ -52,15 +51,15 @@ notedateright`
 blueline`
 
 ```{r ifcoauthors, include = FALSE}
-if (!is.na(params$coauthors))  {
-  coauths <- paste(params$coauthors, "; ")
+if (!is.na(params$authors))  {
+  auths <- paste(", ",params$authors)
 } else {
-  coauths <- ""
+  auths <- ""
 }
 ```
 
 # `r params$abstract_title`
-`r coauths` (`r params$organisation`, `r params$country`)
+`r auths` (`r params$organisation`, `r params$country`)
 
 [`r params$email_address`](`r params$email_address`)
 

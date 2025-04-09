@@ -8,7 +8,8 @@
   list.of.packages <- c("tidyverse",
                         "readxl",
                         "janitor",
-                        "officedown"
+                        "officedown",
+                        "tools"
                         )
   new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
   if(length(new.packages)) install.packages(new.packages)
@@ -21,6 +22,7 @@
   library(readxl)
   library(janitor)
   library(officedown)
+  library(tools)
 }
 
 ### Setup end ###
@@ -91,12 +93,27 @@ render_function <- function(abstract_title, # These function arguments match wit
                     ),
                     output_dir = "docs/DC2024", # This is where the MS Word documents are output
                     # For now, I've added a sequential no to the output title to handle multiple submissions by the same authors
-                    output_file=paste0("DC2024_",session_no,"_", country, "_", last_name, "_A_", "No",i)
+                    output_file=dynamname
   )  # Modify the code in output_file to change the file name formats for the MS Word docs
 }
 
 #This loop goes through the dataframe from your spreadsheet file and creates a PDF from the data in the relevant fields from each row.
-for(i in 1:nrow(df)) {
+x <- 2
+for(i in 1:nrow(df[1,])) {
+  files_list <- list.files(
+    path = "docs/DC2024"
+  ) %>%
+    file_path_sans_ext()
+  
+  dynamname <- paste0("DC2024_",df$session_no[i],"_", df$country[i], "_", df$last_name[i], "_A")
+  
+  # This checks for if a file by the same author already exists, and adds a sequential suffix number
+  # to the file name if it does already exist
+  if (dynamname %in% files_list) { 
+    dynamname <- paste0(dynamname, "_No",x)
+    x <- x + 1
+  }
+  
   render_function(df$abstract_title[i],
                   df$first_name[i], 
                   df$last_name[i], 
